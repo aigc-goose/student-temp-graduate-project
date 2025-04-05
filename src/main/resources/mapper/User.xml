@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xm.graduate_project.mapper.UserMapper">
+
+    <update id="update" parameterType="com.example.xm.graduate_project.entity.User">
+        update user
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="phone != null">
+                phone = #{phone}
+            </if>
+            <if test="avatarurl != null">
+                avatarurl = #{avatarurl}
+            </if>
+        </set>
+        <where>
+            uid = #{uid}
+        </where>
+    </update>
+
+    <insert id="insert" parameterType="com.example.xm.graduate_project.entity.User">
+        insert into user(username, nickname, password, email, phone) values (#{username}, #{nickname}, #{password}, #{email}, #{phone})
+    </insert>
+    
+    <delete id="deleteById" parameterType="integer">
+        delete from user where uid=#{uid}
+    </delete>
+
+    <select id="findAll" resultType="com.example.xm.graduate_project.entity.User">
+        select * from USER
+    </select>
+
+    <select id="selectPage" resultType="com.example.xm.graduate_project.entity.User" parameterType="integer">
+        select * from USER limit #{pageNum}, #{pageSize}
+    </select>
+</mapper>

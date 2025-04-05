@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.xm.graduate_project.mapper.TaskSingleMapper">
+
+    <insert id="insert" parameterType="com.example.xm.graduate_project.entity.TaskSingle">
+        insert into tasksingle(uid, tname, time, type, tstatus, work) values (#{uid}, #{tname}, #{time}, #{type}, #{tstatus}, #{work})
+    </insert>
+
+    <update id="update" parameterType="com.example.xm.graduate_project.entity.TaskSingle">
+        update tasksingle
+        <set>
+            <if test="uid != null">
+                uid = #{uid},
+            </if>
+            <if test="tname != null">
+                tname = #{tname},
+            </if>
+            <if test="tnumber != null">
+                tnumber = #{tnumber},
+            </if>
+            <if test="time != null">
+                time = #{time},
+            </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+            <if test="tstatus != null">
+                tstatus = #{tstatus}
+            </if>
+        </set>
+        <where>
+            tid = #{tid}
+        </where>
+    </update>
+
+    <select id="findAll" resultType="com.example.xm.graduate_project.entity.TaskSingle">
+        select * from tasksingle
+    </select>
+
+    <delete id="deleteById" parameterType="integer">
+        delete from tasksingle where tid = #{tid}
+    </delete>
+
+<!--    <select id="selectPage" resultType="com.example.xm.graduate_project.entity.TaskSingle" parameterType="integer">-->
+<!--        select * from tasksingle limit #{pageNum}, #{pageSize} -->
+<!--    </select>-->
+</mapper>
