@@ -2,6 +2,7 @@ package com.example.xm.graduate_project.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.xm.graduate_project.common.Constants;
 import com.example.xm.graduate_project.common.Result;
 import com.example.xm.graduate_project.controller.dto.UserDTO;
@@ -79,16 +80,21 @@ public class UserController {
         return userMapper.deleteById(uid);
     }
 
-    // 分页查询
-    // 接口路径： /user/page
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum,@RequestParam Integer pageSize) {
-        pageNum = (pageNum - 1) * pageSize;
-        List<User> data = userMapper.selectPage(pageNum, pageSize);
-        Integer total = userMapper.selectTotal();
+    public Map<String, Object> findPage(@RequestParam Integer pageNum,
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam(required = false) String username) {
+
+        Page<User> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(username),"username", username);
+        queryWrapper.orderByDesc("uid");
+
+        Page<User> userPage = userMapper.selectPage(page, queryWrapper);
+
         Map<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("total", total);
+        res.put("data", userPage.getRecords());
+        res.put("total", userPage.getTotal());
         return res;
     }
 }

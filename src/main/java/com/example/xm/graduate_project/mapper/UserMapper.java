@@ -11,20 +11,6 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-
-//    List<User> findAll();
-//
-//    int update(User user);
-//
-//    int insert(User user);
-//
-//    Integer deleteById(Integer uid);
-
-    List<User> selectPage(Integer pageNum, Integer pageSize);
-
-    @Select("select count(*) from user")
-    Integer selectTotal();
-
     @Select("select * from USER where username =#{username}")
     User getUid(String username);
 
