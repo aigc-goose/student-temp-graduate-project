@@ -61,13 +61,11 @@ public class TaskSingleController {
         return taskSingleMapper.deleteById(tid);
     }
 
-    // 分页查询
-    // 接口路径： /user/page
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam String tname) {
+    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam Integer tid, @RequestParam String type) {
         pageNum = (pageNum - 1) * pageSize;
-        List<TaskSingle> data = taskSingleMapper.selectPage(pageNum, pageSize, tname);
-        Integer total = taskSingleMapper.selectTotal(tname);
+        List<TaskSingle> data = taskSingleMapper.selectPage(pageNum, pageSize, tid, type);
+        Integer total = taskSingleMapper.selectTotal(tid, type);
         Map<String, Object> res = new HashMap<>();
         res.put("data", data);
         res.put("total", total);

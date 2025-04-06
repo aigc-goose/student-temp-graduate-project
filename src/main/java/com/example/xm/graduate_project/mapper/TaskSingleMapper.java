@@ -19,11 +19,11 @@ public interface TaskSingleMapper extends BaseMapper<TaskSingle> {
 //
 //    Integer deleteById(Integer tid);
 
-    @Select("select * from tasksingle where tname like concat('%',#{tname},'%') limit #{pageNum}, #{pageSize}")
-    List<TaskSingle> selectPage(Integer pageNum, Integer pageSize, String tname);
+    @Select("select * from tasksingle where tid = #{tid} or type like concat('%',#{type},'%')  limit #{pageNum}, #{pageSize}")
+    List<TaskSingle> selectPage(Integer pageNum, Integer pageSize, Integer tid, String type);
 
-    @Select("select count(*) from tasksingle where tname like concat('%',#{tname},'%')")
-    Integer selectTotal(String tname);
+    @Select("select count(*) from tasksingle where tid = #{tid} or type like concat('%',#{type},'%') ")
+    Integer selectTotal(Integer tid, String type);
 
     @Select("select * from tasksingle where tid=#{tid}")
     TaskSingle find(Integer tid);
