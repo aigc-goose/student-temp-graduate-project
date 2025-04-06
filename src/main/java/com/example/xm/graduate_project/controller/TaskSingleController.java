@@ -1,6 +1,7 @@
 package com.example.xm.graduate_project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.xm.graduate_project.common.Result;
 import com.example.xm.graduate_project.entity.Notice;
 import com.example.xm.graduate_project.entity.TaskSingle;
@@ -62,13 +63,20 @@ public class TaskSingleController {
     }
 
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize, @RequestParam Integer tid, @RequestParam String type) {
-        pageNum = (pageNum - 1) * pageSize;
-        List<TaskSingle> data = taskSingleMapper.selectPage(pageNum, pageSize, tid, type);
-        Integer total = taskSingleMapper.selectTotal(tid, type);
+    public Map<String, Object> findPage(@RequestParam Integer pageNum,
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam Integer tid,
+                                        @RequestParam String type) {
+
+        QueryWrapper<TaskSingle> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(tid != null,"tid", tid);
+        queryWrapper.eq(type != null,"type", type);
+
+        Page<TaskSingle> page = new Page<>(pageNum, pageSize);
+        Page<TaskSingle> taskSinglePage = taskSingleMapper.selectPage(page, queryWrapper);
         Map<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("total", total);
+        res.put("data", taskSinglePage.getRecords());
+        res.put("total", taskSinglePage.getTotal());
         return res;
     }
 }

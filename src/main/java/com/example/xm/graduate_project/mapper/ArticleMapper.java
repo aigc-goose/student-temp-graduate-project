@@ -10,9 +10,4 @@ import java.util.List;
 
 @Mapper
 public interface ArticleMapper extends BaseMapper<Article> {
-    @Select("select count(*) from article")
-    Integer selectTotal();
-
-    @Select("select * from article limit #{pageNum}, #{pageSize}")
-    List<Article> selectPage(Integer pageNum, Integer pageSize);
 }
