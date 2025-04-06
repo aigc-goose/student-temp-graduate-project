@@ -5,9 +5,11 @@ import cn.hutool.poi.excel.ExcelReader;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.xm.graduate_project.common.Result;
 import com.example.xm.graduate_project.entity.Article;
 import com.example.xm.graduate_project.entity.Entity;
+import com.example.xm.graduate_project.entity.TaskSingle;
 import com.example.xm.graduate_project.mapper.EntityMapper;
 import com.example.xm.graduate_project.service.EntityService;
 import org.springframework.beans.factory.annotation.Value;
@@ -53,13 +55,21 @@ public class EntityController {
     }
 
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-        pageNum = (pageNum - 1) * pageSize;
-        List<Entity> data = entityMapper.selectPage(pageNum, pageSize);
-        Integer total = entityMapper.selectTotal();
+    public Map<String, Object> findPage(@RequestParam Integer pageNum,
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam(required = false) Integer id,
+                                        @RequestParam(required = false) String tid) {
+
+        QueryWrapper<Entity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(id != null,"id", id);
+        queryWrapper.eq(tid != null,"tid", tid);
+
+        Page<Entity> page = new Page<>(pageNum, pageSize);
+        Page<Entity> entityPage = entityMapper.selectPage(page, queryWrapper);
+
         Map<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("total", total);
+        res.put("data", entityPage.getRecords());
+        res.put("total", entityPage.getTotal());
         return res;
     }
 
