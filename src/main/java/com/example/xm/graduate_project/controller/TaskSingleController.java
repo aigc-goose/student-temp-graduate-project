@@ -65,8 +65,8 @@ public class TaskSingleController {
     @GetMapping("/page")
     public Map<String, Object> findPage(@RequestParam Integer pageNum,
                                         @RequestParam Integer pageSize,
-                                        @RequestParam Integer tid,
-                                        @RequestParam String type) {
+                                        @RequestParam(required = false) Integer tid,
+                                        @RequestParam(required = false) String type) {
 
         QueryWrapper<TaskSingle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(tid != null,"tid", tid);

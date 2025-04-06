@@ -1,6 +1,7 @@
 package com.example.xm.graduate_project.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.xm.graduate_project.common.Result;
 import com.example.xm.graduate_project.entity.Entity;
 import com.example.xm.graduate_project.entity.Notice;
@@ -47,13 +48,18 @@ public class NoticeController {
     }
 
     @GetMapping("/page")
-    public Map<String, Object> findPage(@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-        pageNum = (pageNum - 1) * pageSize;
-        List<Notice> data = noticeMapper.selectPage(pageNum, pageSize);
-        Integer total = noticeMapper.selectTotal();
+    public Map<String, Object> findPage(@RequestParam Integer pageNum,
+                                        @RequestParam Integer pageSize,
+                                        @RequestParam(required = false) String content) {
+
+        Page<Notice> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<Notice> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like(content != null,"content", content);
+        Page<Notice> noticePage = noticeMapper.selectPage(page, queryWrapper);
+
         Map<String, Object> res = new HashMap<>();
-        res.put("data", data);
-        res.put("total", total);
+        res.put("data", noticePage.getRecords());
+        res.put("total", noticePage.getTotal());
         return res;
     }
 }
