@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 @TableName("user")
 public class User {
@@ -19,4 +21,12 @@ public class User {
     private String phone;
     private String avatarurl;
     private String role;
+    /**
+     * 组织: 个人/团队
+     */
+    private Integer organization;
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 }

@@ -2,6 +2,8 @@ package com.example.xm.graduate_project.controller.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,11 +16,11 @@ import java.util.List;
 @Data
 public class HomeDataDTO {
 
-    private Integer userCount;
+    private Long userCount;
 
-    private Integer taskCount;
+    private Long taskCount;
 
-    private Integer finishedTaskCount;
+    private Long finishedTaskCount;
 
 
     private List<UserActive> userActiveList;
@@ -31,7 +33,7 @@ public class HomeDataDTO {
         /**
          * 日期
          */
-        private String date;
+        private LocalDate date;
 
         /**
          * 数量新增用户  todo 这里原本是活跃用户

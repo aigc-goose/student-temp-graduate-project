@@ -2,6 +2,7 @@ package com.example.xm.graduate_project.controller.dto;
 
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -18,7 +19,7 @@ public class TaskProcessDTO {
     /**
      * 日期
      */
-    private Date date;
+    private LocalDate date;
 
     /**
      * 状态

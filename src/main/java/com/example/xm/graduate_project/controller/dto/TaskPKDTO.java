@@ -1,5 +1,6 @@
 package com.example.xm.graduate_project.controller.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -10,12 +11,13 @@ import lombok.Data;
  * Description:
  */
 @Data
+@AllArgsConstructor
 public class TaskPKDTO {
 
     /**
-     * 角色 个人或团队
+     * 组织  0是个人 1是团队
      */
-    private Integer role;
+    private Integer organization;
 
     /**
      * 状态

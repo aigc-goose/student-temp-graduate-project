@@ -1,6 +1,8 @@
 package com.example.xm.graduate_project.controller.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Created with IDEA
@@ -10,15 +12,18 @@ import lombok.Data;
  * Description:
  */
 @Data
+@AllArgsConstructor
 public class TaskStatisticsDTO {
 
+
+
     /**
-     * 状态
+     * 状态 0:未开始 1:处理中 2:已处理 3:已核查
      */
     private Integer status;
 
     /**
      * 数量
      */
-    private Integer count;
+    private Long count;
 }

@@ -1,5 +1,6 @@
 package com.example.xm.graduate_project.controller.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  * Description:
  */
 @Data
+@AllArgsConstructor
 public class TaskRateDTO {
 
     /**
@@ -20,10 +22,5 @@ public class TaskRateDTO {
     /**
      * 数量
      */
-    private Integer count;
-
-    /**
-     * 百分比
-     */
-    private Double percentage;
+    private Long count;
 }

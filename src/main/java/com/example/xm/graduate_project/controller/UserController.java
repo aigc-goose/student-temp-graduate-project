@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,12 @@ public class UserController {
         return Result.error(Constants.CODE_500, "用户名或密码错误");
     }
 
-    @PostMapping("/register")
+    @PostMapping("/register")  // todo 注册和修改需要传入组织
     public Result register(@RequestBody User user) {
         String username = user.getUsername();
         System.out.println(user);
         if(userMapper.getUid(username) == null) {
+            user.setCreateTime(LocalDateTime.now());
             if(userMapper.insert(user) == 1)
                 return Result.success("注册成功！");
         }
@@ -58,10 +60,11 @@ public class UserController {
     //新增
     @PostMapping("/add")
     public Integer add(@RequestBody User user) {
+        user.setCreateTime(LocalDateTime.now());
         return userMapper.insert(user);
     }
 
-    //更新
+    //更新  // todo 注册和修改需要传入组织
     @PostMapping("/update")
     public Integer update(@RequestBody User user) {
         return userMapper.updateById(user);
