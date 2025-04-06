@@ -66,10 +66,12 @@ public class TaskSingleController {
     public Map<String, Object> findPage(@RequestParam Integer pageNum,
                                         @RequestParam Integer pageSize,
                                         @RequestParam(required = false) Integer tid,
+                                        @RequestParam(required = false) String tname,
                                         @RequestParam(required = false) String type) {
 
         QueryWrapper<TaskSingle> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq(tid != null,"tid", tid);
+        queryWrapper.eq(tname != null,"tname", tname);
         queryWrapper.eq(type != null,"type", type);
 
         Page<TaskSingle> page = new Page<>(pageNum, pageSize);
